@@ -10,6 +10,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Uow;
 
 namespace Streamlife.Mvp.Cms.EntityFrameworkCore
 {
@@ -46,6 +47,12 @@ namespace Streamlife.Mvp.Cms.EntityFrameworkCore
                 /* The main point to change your DBMS.
                  * See also CmsMigrationsDbContextFactory for EF Core tooling. */
                 options.UseSqlite();
+            });
+
+            //SQLite Error 5: 'database table is locked' fix https://github.com/abpframework/abp/issues/5661 
+            Configure<AbpUnitOfWorkDefaultOptions>(options =>
+            {
+                options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
             });
         }
     }
