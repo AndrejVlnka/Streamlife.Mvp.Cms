@@ -1,0 +1,1 @@
+abp new Streamlife.Mvp.Cms  -u blazor -dbms SQLite
